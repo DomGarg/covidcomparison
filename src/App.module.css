@@ -1,0 +1,13 @@
+body {
+    background-color: white;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+h2 {
+    justify-content: center
+}
