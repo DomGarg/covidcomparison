@@ -26,33 +26,36 @@ const Charts = ({data: {confirmed, deaths}}) => {
                     fill: true,
                 }],
             }}
-            options = {{yAxes: [{
+            options = {{ scales: {
+                yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Population',
+                },
                 type: 'logarithmic',
+                position: 'left',
                 ticks: {
-                    beginAtZero: true,
-                    min: 0,
-                    callback: function(tick, index, ticks){
-                      return tick.toLocaleString();
-                    },
+                     min: 1, //minimum tick
+                     max: 1000000000, //maximum tick
+                     callback: function (value, index, values) {
+                         return Number(value.toString());//pass tick values as a string into Number function
+                     }
                      
                 },
-                aafterBuildTicks: function(chart){
-                    var maxTicks = 20;
-                    var maxLog = Math.log(chart.ticks[0]);
-                    var minLogDensity = maxLog / maxTicks;
-                
-                    var ticks = [0, 1000, 10000, 100000, 1000000, 10000000];
-                    var currLog = -Infinity;
-                    lineChart.each(chart.ticks.reverse(), function(tick){
-                      var log = Math.max(0, Math.log(tick));
-                      if (log - currLog > minLogDensity){
-                        ticks.push(tick);
-                        currLog = log;
-                      }
-                    });
-                    chart.ticks = ticks;
-                  }
-            }]}}
+                afterBuildTicks: function (chartObj) { //Build ticks labelling as per your need
+                    chartObj.ticks = [];
+                    chartObj.ticks.push(1);
+                    chartObj.ticks.push(10);
+                    chartObj.ticks.push(100);
+                    chartObj.ticks.push(1000);
+                    chartObj.ticks.push(10000);
+                    chartObj.ticks.push(100000);
+                    chartObj.ticks.push(1000000);
+                    chartObj.ticks.push(10000000);
+                    chartObj.ticks.push(100000000);
+                    chartObj.ticks.push(1000000000);
+                }
+            }]}}}
             
         /> 
     )
